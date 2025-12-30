@@ -11,6 +11,15 @@ A comprehensive PowerShell module for managing [TechID Manager](https://techidma
 *   **Triplets**: Manage TechID Triplets connecting Technicians, Agents, and Rights.
 *   **Secure Authentication**: Securely store and use API credentials.
 
+> **Note**: This module currently implements a subset of the TechID Manager API, focusing on the most common administrative tasks. Not all API features are fully supported yet.
+
+## Customization & Internal Distribution
+You can easily customize this module for different teams within your organization (e.g., creating a restricted "Tier 1" version).
+
+1.  **Select Features**: Delete the `.ps1` files from the `Public` folder that are not relevant or permitted for the specific team.
+2.  **Update Manifest**: Open `TechIDManagerModule.psd1` and update the `FunctionsToExport` list to match the remaining files.
+3.  **Distribute**: Provide the customized module folder to the target team.
+
 ## Installation
 
 ### Manual Installation
@@ -129,10 +138,6 @@ Contributions are welcome! Please submit a pull request or open an issue to sugg
 ## License
 This project is open and available for use.
 
-
-
-
-Now you can buy me a coffee! 
-
 <h3 align="left">Support:</h3>
-<p><a href="https://buymeacoffee.com/dhoule"> <img align="left" src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" height="50" width="210" alt="https://buymeacoffee.com/dhoule" /></a></p><br><br>
+<p><a href="https://buymeacoffee.com/dhoule"> <img align="left" src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" height="50" width="210" alt="https://buymeacoffee.com/dhoule" /></a></p><br><br> 
+
