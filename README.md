@@ -26,7 +26,8 @@ You can easily customize this module for different teams within your organizatio
 ### Manual Installation
 1.  Download the `ModuleV2` folder.
 2.  Rename the folder to `TechIDManagerModule` (matching the `.psd1` file name).
-3.  Place the folder in one of your PowerShell module paths (e.g., `C:\Program Files\PowerShell\Modules` or `~\Documents\PowerShell\Modules`).
+3.  **Windows**: Place the folder in `C:\Program Files\PowerShell\Modules` or `~\Documents\PowerShell\Modules`.
+    **Mac/Linux**: Place the folder in `~/.local/share/powershell/Modules` (or check `$env:PSModulePath`).
 4.  Import the module:
     ```powershell
     Import-Module TechIDManagerModule
@@ -47,18 +48,14 @@ Run the following command to securely store your credentials. You only need to d
 
 > **Mac/Linux Users**: This module fully supports macOS and Linux (via PowerShell Core). Credentials are stored securely in your user home directory.
 ```powershell
-Set-TechIdCredential
-# A credential prompt will appear:
-# Username: Your Manager Email
-# Password: Your API Key
-# ApiHost: your host endpoint 
-```
-
-```powershell
 Set-TechIdCredential -ManagerEmail "admin@example.com" -ApiKey "your-api-key-here" -ApiHost "https://api.techidmanager.com"
 ```
 
+### How it Works (Technical Details)
+The module securely saves your configuration to your user profile directory so it persists across sessions.
 
+*   **Mac/Linux**: Settings are saved to `~/TechID/TechID.config.json` and credentials to `~/TechID/TechID.cred.xml`.
+*   **Windows**: Settings are saved to `C:\Users\<User>\TechID\TechID.config.json` and credentials to `C:\Users\<User>\TechID\TechID.cred.xml`.
 
 ## Quick Start Examples
 

@@ -13,15 +13,10 @@ function Set-TechIdCredential {
     The full path to the directory where the credential file will be stored.
     Defaults to '$HOME\TechID'.
 .EXAMPLE
-    PS C:\> Set-TechIdCredential
+    PS C:\> Set-TechIdCredential -ManagerEmail "admin@example.com" -ApiKey "YourSuperSecretApiKey" -ApiHost "https://api.techidmanager.com"
 
     Description:
-    Prompts the user interactively for their credentials and saves them to C:\Users\<username>\TechID\TechID.cred.xml.
-.EXAMPLE
-    PS C:\> Set-TechIdCredential -ManagerEmail "admin@example.com" -ApiKey "YourSuperSecretApiKey"
-
-    Description:
-    Non-interactively creates and saves the credential file. This is ideal for use in automated scripts.
+    Securely saves the credential file and API host configuration. This is required before running other commands.
 .NOTES
     Author:      Daniel Houle
     Date:        2025-09-03

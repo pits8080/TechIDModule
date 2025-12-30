@@ -11,23 +11,17 @@ This command securely stores your API credentials for all other commands to use.
 
 Set-TechIdCredential
 
-Purpose: Creates or updates the secure credential file.
+Purpose: Creates or updates the secure credential file and API endpoint configuration.
 
-Interactive Mode (Recommended):
+Note: All parameters (ManagerEmail, ApiKey, ApiHost) are mandatory.
 
-# This will trigger a secure pop-up for your credentials.
-# Username = Manager Email
-# Password = API Key
-Set-TechIdCredential
+Example:
 
-Automated Mode:
+Set-TechIdCredential -ManagerEmail "admin@example.com" -ApiKey "your-api-key-here" -ApiHost "https://api.techidmanager.com"
 
-Set-TechIdCredential -ManagerEmail "your-email@example.com" -ApiKey "YourApiKeyHere"
-26: 
-27: Updating API Endpoint:
-28: 
-29: # Set a custom API URL. This persists across sessions.
-30: Set-TechIdCredential -ApiHost "https://new.api-endpoint.com"
+Optional Parameters:
+
+-Path: Specifies a custom directory to save the credential file (Defaults to user home directory).
 
 2. Technician Management
 Commands for managing technician accounts and their settings.
