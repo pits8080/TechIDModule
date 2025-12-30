@@ -24,7 +24,7 @@ You can easily customize this module for different teams within your organizatio
 ## Installation
 
 ### Manual Installation
-1.  Download the `ModuleV2` folder.
+1.  Download the `Module` folder.
 2.  Rename the folder to `TechIDManagerModule` (matching the `.psd1` file name).
 3.  Place the folder in one of your PowerShell module paths (e.g., `C:\Program Files\PowerShell\Modules` or `~\Documents\PowerShell\Modules`).
 4.  Import the module:
@@ -144,4 +144,5 @@ This project is open and available for use.
 
 <h3 align="left">Support:</h3>
 <p><a href="https://buymeacoffee.com/dhoule"> <img align="left" src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" height="50" width="210" alt="https://buymeacoffee.com/dhoule" /></a></p><br><br> 
+
 
