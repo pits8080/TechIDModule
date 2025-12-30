@@ -9,9 +9,9 @@ function Get-TechIdTech {
     The name of a specific technician to retrieve. If omitted, the function returns all technicians. This parameter has an alias of 'Name' and supports wildcards.
 .PARAMETER Credential
     A PSCredential object. The username should be the manager's email and the password should be the TechID API Key.
-    If omitted, the function will look for a saved credential file at '$env:USERPROFILE\TechID\TechID.cred.xml'.
+    If omitted, the function will look for a saved credential file at '$HOME\TechID\TechID.cred.xml'.
 .PARAMETER ApiHost
-    The base URL for the TechID API endpoint. Defaults to 'https://ch010.ruffiansoftware.com'.
+    The base URL for the TechID API endpoint. Defaults to the configured default host.
 .PARAMETER LogPath
     Path to the log file. If provided, verbose output will be written to this file.
 .PARAMETER DryRun
@@ -36,7 +36,7 @@ function Get-TechIdTech {
 .NOTES
     Author:      Daniel Houle
     Date:        2025-09-03
-    Version:     1.6.0
+    Version:     3.0.0
 
     VERSION HISTORY:
     1.6.0 - 2025-09-20 - Refactored to use internal helper functions for credentials and API calls.
@@ -51,7 +51,7 @@ function Get-TechIdTech {
         [System.Management.Automation.PSCredential]$Credential,
 
         [Parameter(Mandatory = $false)]
-        [string]$ApiHost = "https://ch010.ruffiansoftware.com",
+        [string]$ApiHost,
 
         [Parameter(Mandatory = $false)]
         [string]$LogPath,
@@ -65,6 +65,9 @@ function Get-TechIdTech {
 
     begin {
         $Credential = Get-TechIdCredentialInternal -Credential $Credential
+        if ([string]::IsNullOrWhiteSpace($ApiHost)) {
+            $ApiHost = $script:DefaultApiHost
+        }
 
         # --- VERBOSE/LOGGING SETUP ---
         $scriptVersion = "1.6.0"

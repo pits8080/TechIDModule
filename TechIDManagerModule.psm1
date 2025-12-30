@@ -1,10 +1,8 @@
 # Get the directory where this .psm1 file is located
-$PSScriptRoot = $PSCommandPath | Split-Path
-
 # Initialize Default API Host
 # 1. Try to load from user config
 # 2. Fallback to default if not found
-$configPath = Join-Path -Path $env:USERPROFILE -ChildPath 'TechID\TechID.config.json'
+$configPath = Join-Path -Path $HOME -ChildPath 'TechID/TechID.config.json'
 if (Test-Path -Path $configPath) {
     try {
         $config = Get-Content -Path $configPath -Raw | ConvertFrom-Json
@@ -16,7 +14,7 @@ if (Test-Path -Path $configPath) {
 }
 
 if ([string]::IsNullOrEmpty($script:DefaultApiHost)) {
-    $script:DefaultApiHost = "https://ch010.ruffiansoftware.com"
+    Write-Warning "No API Host configured. Please run 'Set-TechIdCredential' to set your API Host and Credentials."
 }
 
 # Dot-source all private helper functions first

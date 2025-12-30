@@ -11,7 +11,7 @@ function Set-TechIdCredential {
     The API Key for the TechID service.
 .PARAMETER Path
     The full path to the directory where the credential file will be stored.
-    Defaults to '$env:USERPROFILE\TechID'.
+    Defaults to '$HOME\TechID'.
 .EXAMPLE
     PS C:\> Set-TechIdCredential
 
@@ -25,41 +25,33 @@ function Set-TechIdCredential {
 .NOTES
     Author:      Daniel Houle
     Date:        2025-09-03
-    Version:     1.1.0
+    Version:     3.0.0
 
     VERSION HISTORY:
     1.1.0 - 2025-09-03 - Added non-interactive parameter set for automation.
     1.0.0 - 2025-09-03 - Initial function creation.
 #>
-    [CmdletBinding(DefaultParameterSetName = 'Interactive', SupportsShouldProcess = $true)]
+    [CmdletBinding(SupportsShouldProcess = $true)]
     param (
-        [Parameter(ParameterSetName = 'NonInteractive', Mandatory = $true)]
+        [Parameter(Mandatory = $true)]
         [string]$ManagerEmail,
 
-        [Parameter(ParameterSetName = 'NonInteractive', Mandatory = $true)]
+        [Parameter(Mandatory = $true)]
         [string]$ApiKey,
 
-        [Parameter(Mandatory = $false)]
-        [string]$Path = (Join-Path -Path $env:USERPROFILE -ChildPath 'TechID'),
+        [Parameter(Mandatory = $true)]
+        [string]$ApiHost,
 
         [Parameter(Mandatory = $false)]
-        [string]$ApiHost
+        [string]$Path = (Join-Path -Path $HOME -ChildPath 'TechID')
     )
 
     try {
         $cred = $null
 
-        if ($PSCmdlet.ParameterSetName -eq 'Interactive') {
-            Write-Host "Please enter your TechID credentials."
-            Write-Host "Username = Your manager email"
-            Write-Host "Password = Your API Key"
-            $cred = Get-Credential -Message "Enter TechID Credentials"
-        }
-        else {
-            Write-Verbose "Creating credential object non-interactively."
-            $secureApiKey = ConvertTo-SecureString -String $ApiKey -AsPlainText -Force
-            $cred = New-Object System.Management.Automation.PSCredential($ManagerEmail, $secureApiKey)
-        }
+        Write-Verbose "Creating credential object non-interactively."
+        $secureApiKey = ConvertTo-SecureString -String $ApiKey -AsPlainText -Force
+        $cred = New-Object System.Management.Automation.PSCredential($ManagerEmail, $secureApiKey)
 
         if (-not $cred) {
             Write-Warning "Credential creation failed or was cancelled. No file was saved."
@@ -81,13 +73,13 @@ function Set-TechIdCredential {
         }
 
         # Handle ApiHost configuration
-        if ($ApiHost) {
-            $configPath = Join-Path -Path $Path -ChildPath "TechID.config.json"
-            $configData = @{ ApiHost = $ApiHost }
-            if ($PSCmdlet.ShouldProcess($configPath, "Save API Host Configuration")) {
-                $configData | ConvertTo-Json | Set-Content -Path $configPath
-                Write-Host "API Host configuration saved to '$configPath' (Host: $ApiHost)" -ForegroundColor Green
-            }
+        $configPath = Join-Path -Path $Path -ChildPath "TechID.config.json"
+        $configData = @{ ApiHost = $ApiHost }
+        if ($PSCmdlet.ShouldProcess($configPath, "Save API Host Configuration")) {
+            $configData | ConvertTo-Json | Set-Content -Path $configPath
+            # Update the session variable immediately
+            $script:DefaultApiHost = $ApiHost
+            Write-Host "API Host configuration saved to '$configPath' (Host: $ApiHost)" -ForegroundColor Green
         }
     }
     catch {

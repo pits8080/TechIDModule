@@ -13,7 +13,7 @@ function Remove-TechIdAgent {
 .PARAMETER Credential
     A PSCredential object. If omitted, the function will look for a saved credential file.
 .PARAMETER ApiHost
-    The base URL for the TechID API endpoint. Defaults to 'https://ch010.ruffiansoftware.com'.
+    The base URL for the TechID API endpoint. Defaults to the configured default host.
 .PARAMETER ShowApiCall
     If specified, the function will display the raw API request details before execution.
 .EXAMPLE
@@ -34,7 +34,7 @@ function Remove-TechIdAgent {
 .NOTES
     Author:      Daniel Houle
     Date:        2025-09-11
-    Version:     2.4.0
+    Version:     3.0.0
 
     VERSION HISTORY:
     2.4.0 - 2025-10-23 - Added DomainGuid parameter set for deletion by GUID.
@@ -53,7 +53,7 @@ function Remove-TechIdAgent {
         [System.Management.Automation.PSCredential]$Credential,
 
         [Parameter(Mandatory = $false)]
-        [string]$ApiHost = "https://ch010.ruffiansoftware.com",
+        [string]$ApiHost,
 
         [Parameter(Mandatory = $false)]
         [switch]$ShowApiCall
@@ -61,6 +61,9 @@ function Remove-TechIdAgent {
 
     begin {
         $Credential = Get-TechIdCredentialInternal -Credential $Credential
+        if ([string]::IsNullOrWhiteSpace($ApiHost)) {
+            $ApiHost = $script:DefaultApiHost
+        }
     }
 
     process {

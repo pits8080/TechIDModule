@@ -6,13 +6,13 @@ function Get-TechIdAgents {
     Connects to the TechID API to retrieve a list of all agent records (referred to as domains by the API).
     If a name is provided, it will filter the results to return only that specific agent record. Wildcards (*, ?) are supported.
 .PARAMETER AgentName
-    The name of a specific agent to retrieve (e.g., "DHOULEDEVTESTVM\VisorySU"). This parameter supports wildcards (*, ?). If omitted, the function returns all agents.
+    The name of a specific agent to retrieve (e.g., "SERVER01\AgentAdmin"). This parameter supports wildcards (*, ?). If omitted, the function returns all agents.
 .PARAMETER DomainGuid
     The unique Domain GUID of a specific agent to retrieve.
 .PARAMETER Credential
     A PSCredential object. If omitted, the function will look for a saved credential file.
 .PARAMETER ApiHost
-    The base URL for the TechID API endpoint. Defaults to 'https://ch010.ruffiansoftware.com'.
+    The base URL for the TechID API endpoint. Defaults to the configured default host.
 .PARAMETER ShowApiCall
     If specified, the function will display the raw API request details before execution.
 .EXAMPLE
@@ -33,7 +33,7 @@ function Get-TechIdAgents {
 .NOTES
     Author:      Daniel Houle
     Date:        2025-09-04
-    Version:     1.7.0
+    Version:     3.0.0
 
     VERSION HISTORY:
     1.7.0 - 2025-10-07 - Added -DomainGuid parameter to allow fetching by GUID.
@@ -51,7 +51,7 @@ function Get-TechIdAgents {
         [System.Management.Automation.PSCredential]$Credential,
 
         [Parameter(Mandatory = $false)]
-        [string]$ApiHost = "https://ch010.ruffiansoftware.com",
+        [string]$ApiHost,
 
         [Parameter(Mandatory = $false)]
         [switch]$ShowApiCall
@@ -59,6 +59,9 @@ function Get-TechIdAgents {
 
     begin {
         $Credential = Get-TechIdCredentialInternal -Credential $Credential
+        if ([string]::IsNullOrWhiteSpace($ApiHost)) {
+            $ApiHost = $script:DefaultApiHost
+        }
     }
 
     process {

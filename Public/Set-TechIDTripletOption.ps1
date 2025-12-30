@@ -17,7 +17,7 @@ function Set-TechIDTripletOption {
         A PSCredential object. If omitted, the function will look for a saved credential file.
 
     .PARAMETER ApiHost
-        The base URL for the TechID API endpoint. Defaults to 'https://ch010.ruffiansoftware.com'.
+        The base URL for the TechID API endpoint. Defaults to the configured default host.
 
     .PARAMETER ShowApiCall
         If specified, the full API URL and headers will be displayed in the console (secrets redacted).
@@ -38,7 +38,7 @@ function Set-TechIDTripletOption {
         [System.Management.Automation.PSCredential]$Credential,
 
         [Parameter(Mandatory = $false)]
-        [string]$ApiHost = "https://ch010.ruffiansoftware.com",
+        [string]$ApiHost,
 
         [Parameter(Mandatory = $false)]
         [switch]$ShowApiCall
@@ -46,6 +46,9 @@ function Set-TechIDTripletOption {
 
     begin {
         $Credential = Get-TechIdCredentialInternal -Credential $Credential
+        if ([string]::IsNullOrWhiteSpace($ApiHost)) {
+            $ApiHost = $script:DefaultApiHost
+        }
     }
 
     process {

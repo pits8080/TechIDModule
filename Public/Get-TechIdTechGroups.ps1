@@ -12,7 +12,7 @@ function Get-TechIdTechGroups {
 .PARAMETER Credential
     A PSCredential object. If omitted, the function will look for a saved credential file.
 .PARAMETER ApiHost
-    The base URL for the TechID API endpoint. Defaults to 'https://ch010.ruffiansoftware.com'.
+    The base URL for the TechID API endpoint. Defaults to the configured default host.
 .PARAMETER ShowApiCall
     If specified, the function will display the raw API request details before execution.
 .EXAMPLE
@@ -33,7 +33,7 @@ function Get-TechIdTechGroups {
 .NOTES
     Author:      Daniel Houle
     Date:        2025-09-03
-    Version:     1.3.0
+    Version:     3.0.0
 
     VERSION HISTORY:
     1.3.0 - 2025-10-01 - Added -MemberNames switch to return only member names.
@@ -52,7 +52,7 @@ function Get-TechIdTechGroups {
         [System.Management.Automation.PSCredential]$Credential,
 
         [Parameter(Mandatory = $false)]
-        [string]$ApiHost = "https://ch010.ruffiansoftware.com",
+        [string]$ApiHost,
 
         [Parameter(Mandatory = $false)]
         [switch]$ShowApiCall
@@ -60,6 +60,9 @@ function Get-TechIdTechGroups {
 
     begin {
         $Credential = Get-TechIdCredentialInternal -Credential $Credential
+        if ([string]::IsNullOrWhiteSpace($ApiHost)) {
+            $ApiHost = $script:DefaultApiHost
+        }
     }
 
     process {

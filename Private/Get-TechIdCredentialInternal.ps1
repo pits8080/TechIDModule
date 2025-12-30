@@ -1,5 +1,5 @@
 function Get-TechIdCredentialInternal {
-<#
+    <#
 .SYNOPSIS
     Internal helper to resolve and return the TechID credential.
 .DESCRIPTION
@@ -20,7 +20,7 @@ function Get-TechIdCredentialInternal {
         return $Credential
     }
 
-    $credFilePath = Join-Path -Path $env:USERPROFILE -ChildPath 'TechID\TechID.cred.xml'
+    $credFilePath = Join-Path -Path $HOME -ChildPath 'TechID/TechID.cred.xml'
     if (Test-Path -Path $credFilePath) {
         return Import-Clixml -Path $credFilePath
     }

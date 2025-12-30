@@ -42,7 +42,7 @@ function Set-TechIdAgentOptions {
 .NOTES
     Author:      Daniel Houle
     Date:        2025-10-22
-    Version:     1.4.0
+    Version:     3.0.0
 
     VERSION HISTORY:
     1.4.0 - 2025-10-22 - Enabled pipeline support by property name for DomainGuid and AgentName parameters.
@@ -98,7 +98,7 @@ function Set-TechIdAgentOptions {
         [System.Management.Automation.PSCredential]$Credential,
 
         [Parameter(Mandatory = $false)]
-        [string]$ApiHost = "https://ch010.ruffiansoftware.com",
+        [string]$ApiHost,
 
         [Parameter(Mandatory = $false)]
         [switch]$ShowApiCall
@@ -106,6 +106,9 @@ function Set-TechIdAgentOptions {
 
     begin {
         $Credential = Get-TechIdCredentialInternal -Credential $Credential
+        if ([string]::IsNullOrWhiteSpace($ApiHost)) {
+            $ApiHost = $script:DefaultApiHost
+        }
 
         # This mapping translates the PowerShell parameter name to the exact API property name.
         $script:paramToApiMap = @{

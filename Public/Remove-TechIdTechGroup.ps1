@@ -17,7 +17,7 @@ function Remove-TechIdTechGroup {
 .NOTES
     Author:      Daniel Houle
     Date:        2025-10-02
-    Version:     2.0.0
+    Version:     3.0.0
 #>
     [CmdletBinding(SupportsShouldProcess = $true, ConfirmImpact = 'High')]
     param (
@@ -29,7 +29,7 @@ function Remove-TechIdTechGroup {
         [System.Management.Automation.PSCredential]$Credential,
 
         [Parameter(Mandatory = $false)]
-        [string]$ApiHost = "https://ch010.ruffiansoftware.com",
+        [string]$ApiHost,
 
         [Parameter(Mandatory = $false)]
         [switch]$ShowApiCall
@@ -37,6 +37,9 @@ function Remove-TechIdTechGroup {
 
     begin {
         $Credential = Get-TechIdCredentialInternal -Credential $Credential
+        if ([string]::IsNullOrWhiteSpace($ApiHost)) {
+            $ApiHost = $script:DefaultApiHost
+        }
     }
 
     process {

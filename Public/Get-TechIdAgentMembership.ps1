@@ -12,7 +12,7 @@ function Get-TechIdAgentMembership {
 .PARAMETER Credential
     A PSCredential object. If omitted, the function will look for a saved credential file.
 .PARAMETER ApiHost
-    The base URL for the TechID API endpoint. Defaults to 'https://ch010.ruffiansoftware.com'.
+    The base URL for the TechID API endpoint. Defaults to the configured default host.
 .PARAMETER ShowApiCall
     If specified, the function will display the raw API request details for its internal calls.
 .EXAMPLE
@@ -28,7 +28,7 @@ function Get-TechIdAgentMembership {
 .NOTES
     Author:      Daniel Houle
     Date:        2025-09-04
-    Version:     1.9.0
+    Version:     3.0.0
 
     VERSION HISTORY:
     1.9.0 - 2025-09-30 - Changed -UseCache to -NoCache to follow PowerShell best practices.
@@ -46,7 +46,7 @@ function Get-TechIdAgentMembership {
         [System.Management.Automation.PSCredential]$Credential,
 
         [Parameter(Mandatory = $false)]
-        [string]$ApiHost = "https://ch010.ruffiansoftware.com",
+        [string]$ApiHost,
 
         [Parameter(Mandatory = $false)]
         [switch]$ShowApiCall
@@ -54,6 +54,9 @@ function Get-TechIdAgentMembership {
 
     begin {
         $Credential = Get-TechIdCredentialInternal -Credential $Credential
+        if ([string]::IsNullOrWhiteSpace($ApiHost)) {
+            $ApiHost = $script:DefaultApiHost
+        }
 
         if (-not $NoCache) {
             # --- PERFORMANCE OPTIMIZATION: CACHE ---

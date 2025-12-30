@@ -14,7 +14,7 @@ function Get-TechIdAgentOptions {
 .NOTES
     Author:      Daniel Houle
     Date:        2025-10-09
-    Version:     2.3.0
+    Version:     3.0.0
 
     VERSION HISTORY:
     2.3.0 - 2025-10-09 - Added InputObject parameter set to correctly handle pipeline input.
@@ -38,7 +38,7 @@ function Get-TechIdAgentOptions {
         [System.Management.Automation.PSCredential]$Credential,
 
         [Parameter(Mandatory = $false)]
-        [string]$ApiHost = "https://ch010.ruffiansoftware.com",
+        [string]$ApiHost,
 
         [Parameter(Mandatory = $false)]
         [switch]$ShowApiCall
@@ -46,6 +46,9 @@ function Get-TechIdAgentOptions {
 
     begin {
         $Credential = Get-TechIdCredentialInternal -Credential $Credential
+        if ([string]::IsNullOrWhiteSpace($ApiHost)) {
+            $ApiHost = $script:DefaultApiHost
+        }
     }
 
     process {

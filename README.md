@@ -9,6 +9,7 @@ A comprehensive PowerShell module for managing [TechID Manager](https://techidma
 *   **Group Management**: Manage Agent Groups, Technician Groups, and Rights Groups.
 *   **Organization**: Create and manage Account Leafs to structure your resources.
 *   **Triplets**: Manage TechID Triplets connecting Technicians, Agents, and Rights.
+*   **Cross-Platform Support**: Works seamlessly on Windows, macOS, and Linux (PowerShell 7+).
 *   **Secure Authentication**: Securely store and use API credentials.
 
 > **Note**: This module currently implements a subset of the TechID Manager API, focusing on the most common administrative tasks. Not all API features are fully supported yet.
@@ -57,6 +58,13 @@ Set-TechIdCredential
 Set-TechIdCredential -ManagerEmail "admin@example.com" -ApiKey "your-api-key-here"
 ```
 
+### Update API Endpoint (Optional)
+If you need to use a custom API endpoint (defaults to standard TechID Cloud), you can update it at any time. This setting is persistent.
+
+```powershell
+Set-TechIdCredential -ApiHost "https://new.api-endpoint.com"
+```
+
 ## Quick Start Examples
 
 ### Manage Technicians
@@ -93,6 +101,7 @@ Get-TechIdAgents -AgentName "WEB-*" | Add-TechIdAgentToGroup -GroupName "Web Ser
 ```
 
 ## Available Functions
+For a complete list of commands with detailed examples, please refer to the **[Quick Reference Guide (QRG)](QRG.md)**.
 
 ### Technicians
 *   `New-TechIdTech`

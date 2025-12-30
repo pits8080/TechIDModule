@@ -7,7 +7,7 @@ function Set-TechIdAgentLeaf {
     by sending a POST request to a specific endpoint that includes both the Agent ID and the Leaf Path.
     If the specified leaf path does not exist, this command will first create it.
 .PARAMETER AgentName
-    The full, exact name of the agent to be modified (e.g., "DHOULEDEVTESTVM\VisorySU").
+    The full, exact name of the agent to be modified (e.g., "SERVER01\AgentAdmin").
 .PARAMETER DomainGuid
     The GUID of the agent to be modified. Use this to skip the name lookup.
 .PARAMETER Leaf
@@ -25,7 +25,7 @@ function Set-TechIdAgentLeaf {
 .NOTES
     Author:      Daniel Houle
     Date:        2025-12-30
-    Version:     2.1.0
+    Version:     3.0.0
 
     VERSION HISTORY:
     2.1.0 - 2025-12-30 - Added support for -DomainGuid to target agents by ID directly.
@@ -47,7 +47,7 @@ function Set-TechIdAgentLeaf {
         [System.Management.Automation.PSCredential]$Credential,
 
         [Parameter(Mandatory = $false)]
-        [string]$ApiHost = "https://ch010.ruffiansoftware.com",
+        [string]$ApiHost,
 
         [Parameter(Mandatory = $false)]
         [switch]$ShowApiCall
@@ -55,6 +55,9 @@ function Set-TechIdAgentLeaf {
 
     begin {
         $Credential = Get-TechIdCredentialInternal -Credential $Credential
+        if ([string]::IsNullOrWhiteSpace($ApiHost)) {
+            $ApiHost = $script:DefaultApiHost
+        }
     }
 
     process {

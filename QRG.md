@@ -23,6 +23,11 @@ Set-TechIdCredential
 Automated Mode:
 
 Set-TechIdCredential -ManagerEmail "your-email@example.com" -ApiKey "YourApiKeyHere"
+26: 
+27: Updating API Endpoint:
+28: 
+29: # Set a custom API URL. This persists across sessions.
+30: Set-TechIdCredential -ApiHost "https://new.api-endpoint.com"
 
 2. Technician Management
 Commands for managing technician accounts and their settings.

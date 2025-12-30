@@ -9,7 +9,7 @@ function Remove-TechIdLeaf {
 .PARAMETER Credential
     A PSCredential object. If omitted, the function will look for a saved credential file.
 .PARAMETER ApiHost
-    The base URL for the TechID API endpoint. Defaults to 'https://ch010.ruffiansoftware.com'.
+    The base URL for the TechID API endpoint. Defaults to the configured default host.
 .PARAMETER ShowApiCall
     If specified, the function will display the raw API request details before execution.
 .EXAMPLE
@@ -25,7 +25,7 @@ function Remove-TechIdLeaf {
 .NOTES
     Author:      Daniel Houle
     Date:        2025-11-25
-    Version:     1.0.0
+    Version:     3.0.0
 #>
     [CmdletBinding(SupportsShouldProcess = $true, DefaultParameterSetName = 'ById')]
     param (
@@ -41,7 +41,7 @@ function Remove-TechIdLeaf {
         [System.Management.Automation.PSCredential]$Credential,
 
         [Parameter(Mandatory = $false)]
-        [string]$ApiHost = "https://ch010.ruffiansoftware.com",
+        [string]$ApiHost,
 
         [Parameter(Mandatory = $false)]
         [switch]$ShowApiCall
@@ -49,6 +49,9 @@ function Remove-TechIdLeaf {
 
     begin {
         $Credential = Get-TechIdCredentialInternal -Credential $Credential
+        if ([string]::IsNullOrWhiteSpace($ApiHost)) {
+            $ApiHost = $script:DefaultApiHost
+        }
     }
 
     process {
