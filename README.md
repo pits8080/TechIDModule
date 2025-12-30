@@ -45,25 +45,20 @@ Before using any commands, you must configure your API credentials. You will nee
 ### One-Time Setup
 Run the following command to securely store your credentials. You only need to do this once; subsequent commands will automatically load these credentials.
 
-**Interactive Mode (Secure):**
+> **Mac/Linux Users**: This module fully supports macOS and Linux (via PowerShell Core). Credentials are stored securely in your user home directory.
 ```powershell
 Set-TechIdCredential
 # A credential prompt will appear:
 # Username: Your Manager Email
 # Password: Your API Key
+# ApiHost: your host endpoint 
 ```
-
-**Automated Mode:**
-```powershell
-Set-TechIdCredential -ManagerEmail "admin@example.com" -ApiKey "your-api-key-here"
-```
-
-### Update API Endpoint (Optional)
-If you need to use a custom API endpoint (defaults to standard TechID Cloud), you can update it at any time. This setting is persistent.
 
 ```powershell
-Set-TechIdCredential -ApiHost "https://new.api-endpoint.com"
+Set-TechIdCredential -ManagerEmail "admin@example.com" -ApiKey "your-api-key-here" -ApiHost "https://api.techidmanager.com"
 ```
+
+
 
 ## Quick Start Examples
 
