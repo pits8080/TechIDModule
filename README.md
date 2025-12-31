@@ -2,6 +2,11 @@
 
 A comprehensive PowerShell module for managing [TechID Manager](https://techidmanager.com) resources via the TechID API. This module allows administrators to automate the management of technicians, agents (domains), groups, and organizational structures (leafs).
 
+> **Important**:
+> *   **Subscription Required**: You need a valid subscription to [TechID Manager](https://techidmanager.com) for this module to work.
+> *   **Critical Setup**: You MUST setup your environment using `Set-TechIdCredential` providing your `ManagerEmail`, `ApiKey`, and `ApiHost`.
+> *   **Status**: This module currently implements a subset of the TechID Manager API, focusing on the most common administrative tasks. Not all API features are fully supported yet.
+
 ## Features
 
 *   **Technician Management**: Create, retrieve, and manage technician accounts and group memberships.
